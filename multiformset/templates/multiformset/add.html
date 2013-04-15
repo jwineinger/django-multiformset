@@ -9,67 +9,19 @@
 <body>
 
     <div>
-        <select id="form_chooser"></select>
-        <input type="submit" id="generate_forms" value="Generate Forms" />
+        <select id="multiformset-form_chooser"></select>
+        <input type="submit" id="multiformset-add_form" value="Add Form" />
     </div>
 
     <form method="post" action=".">
-        {% csrf_token %}
-        {% for formset in formsets %}
-            {# render formset (management form and any existing form instanes #}
-            {{ formset.management_form }}
-
-            {% for form in formset.forms %}
-                {# use form template if provided, else just render as_p #}
-                {% if formset.template_name %}
-                    {% include formset.template_name with form=form %}
-                {% else %}
-                    <div class="form-{{ formset.form|get_class }}">
-                        {{ form.as_p }}
-                    </div>
-                {% endif %}
-            {% endfor %}
-
-            {# stores empty form for javascript #}
-            <div style="display:none;" data-form-class="{{ formset.form|get_class }}" id="{{ formset.form|get_class }}-form_template" class="form_template">
-                {# use form template if provided, else just render as_p #}
-                {% if formset.template_name %}
-                    {% include formset.template_name with form=formset.empty_form %}
-                {% else %}
-                    <div class="form-{{ formset.form|get_class }}">
-                        {{ formset.empty_form.as_p }}
-                    </div>
-                {% endif %}
-            </div>
-        {% endfor %}
+        {% include "multiformset/includes/formsets_render.html" with formsets=formsets %}
 
         {# where the generated forms go #}
-        <div id="new_forms"></div>
+        <div id="multiformset-new_forms"></div>
 
         <input type="submit">
     </form>
 
-    <script>
-        $(function() {
-            $(".form_template").each(function(idx, el) {
-                var $el = $(el);
-                $('#form_chooser')
-                    .append($("<option></option>")
-                        .attr("value", $el.attr('data-form-class'))
-                        .text($el.attr('data-form-class')));
-            });
-            $("#generate_forms").click(function() {
-                // update total form count
-                var form_name = $("#form_chooser").val();
-                var $total_forms = $("#id_" + form_name + "-TOTAL_FORMS");
-                var qty = parseInt($total_forms.val());
-                $total_forms.val(qty + 1);
-
-                // copy the template and replace prefixes with the correct index
-                var html = $("#" + form_name + "-form_template").clone().html().replace(/__prefix__/g, qty);
-                $("#new_forms").append(html);
-            })
-        })
-    </script>
+    <script src="{{ STATIC_URL }}/multiformset.js" type="text/javascript"></script>
 </body>
 </html>
