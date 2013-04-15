@@ -7,7 +7,8 @@ function multiformset( options ) {
         'form_chooser_selector' : '#multiformset-form_chooser',
         'new_form_parent' : '#multiformset-new_forms',
         'template_value_attr': 'data-form-class',
-        'template_text_attr': 'data-form-class'
+        'template_text_attr': 'data-form-class',
+        'add_form_callback': null
 
     }, options);
 
@@ -31,6 +32,10 @@ function multiformset( options ) {
         // copy the template and replace prefixes with the correct index
         var html = $("#" + form_name + "-form_template").clone().html().replace(/__prefix__/g, qty);
         $(settings.new_form_parent).append(html);
+
+        if (settings.add_form_callback) {
+            settings.add_form_callback(html);
+        }
     });
 
 }
