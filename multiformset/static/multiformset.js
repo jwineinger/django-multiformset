@@ -4,18 +4,19 @@ function multiformset( options ) {
     var settings = $.extend( {
         'template_selector' : '.form_template',
         'add_form_selector' : '#multiformset-add_form',
+        'form_chooser_selector' : '#multiformset-form_chooser',
         'new_form_parent' : '#multiformset-new_forms',
         'template_value_attr': 'data-form-class',
         'template_text_attr': 'data-form-class'
 
     }, options);
 
-    var $chooser = $(settings.add_form_selector);
+    var $chooser = $(settings.form_chooser_selector);
     $(settings.template_selector).each(function(idx, el) {
         var $el = $(el);
-            $chooser.append($("<option></option>")
-                .attr("value", $el.attr(settings.template_value_attr))
-                .text($el.attr(settings.template_text_attr)));
+        $chooser.append($("<option></option>")
+            .attr("value", $el.attr(settings.template_value_attr))
+            .text($el.attr(settings.template_text_attr)));
     });
     $(settings.add_form_selector).click(function(evt) {
         // don't submit if this input happens to be within the form
