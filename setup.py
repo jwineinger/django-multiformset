@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 setup(
     name = 'django-multiformset',
     version = '1.0',
-    packages = ['multiformset'],
+    packages = ['multiformset', 'multiformset.templatetags'],
     include_package_data = True,
     #license = 'BSD License',
     description = 'A Django app to use multiple formsets on the same page.',
