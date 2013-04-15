@@ -1,29 +1,9 @@
-{% load get_class %}
-{% csrf_token %}
 {% for formset in formsets %}
-    {# render formset (management form and any existing form instanes #}
-    {{ formset.management_form }}
+        
+    {% include 'multiformset/includes/render_management_form.html' with formset=formset %}
 
-    {% for form in formset.forms %}
-        {# use form template if provided, else just render as_p #}
-        {% if formset.template_name %}
-            {% include formset.template_name with form=form %}
-        {% else %}
-            <div class="form-{{ formset.form|get_class }} form multiformset-form">
-                {{ form.as_p }}
-            </div>
-        {% endif %}
-    {% endfor %}
+    {% include 'multiformset/includes/render_formset_forms.html' with formset=formset %}
 
-    {# stores empty form for javascript #}
-    <div style="display:none;" data-form-class="{{ formset.form|get_class }}" id="{{ formset.form|get_class }}-form_template" class="form_template">
-        {# use form template if provided, else just render as_p #}
-        {% if formset.template_name %}
-            {% include formset.template_name with form=formset.empty_form %}
-        {% else %}
-            <div class="form-{{ formset.form|get_class }} form multiformset-form">
-                {{ formset.empty_form.as_p }}
-            </div>
-        {% endif %}
-    </div>
+    {% include 'multiformset/includes/render_formset_blank_forms.html' with formset=formset %}
+
 {% endfor %}

@@ -1,0 +1,11 @@
+{% load get_class %}
+{% for form in formset.forms %}
+    {# use form template if provided, else just render as_p #}
+    {% if formset.template_name %}
+        {% include formset.template_name with form=form %}
+    {% else %}
+        <div class="form-{{ formset.form|get_class }} form multiformset-form">
+            {{ form.as_p }}
+        </div>
+    {% endif %}
+{% endfor %}
