@@ -1,14 +1,14 @@
 $(function() {
+    var $chooser = $('#multiformset-form_chooser');
     $(".form_template").each(function(idx, el) {
         var $el = $(el);
-        $('#form_chooser')
-            .append($("<option></option>")
+            $chooser.append($("<option></option>")
                 .attr("value", $el.attr('data-form-class'))
                 .text($el.attr('data-form-class')));
     });
     $("#multiformset-add_form").click(function() {
         // update total form count
-        var form_name = $("#multiformset-form_chooser").val();
+        var form_name = $chooser.val();
         var $total_forms = $("#id_" + form_name + "-TOTAL_FORMS");
         var qty = parseInt($total_forms.val());
         $total_forms.val(qty + 1);
