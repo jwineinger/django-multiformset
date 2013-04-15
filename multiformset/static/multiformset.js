@@ -6,7 +6,10 @@ $(function() {
                 .attr("value", $el.attr('data-form-class'))
                 .text($el.attr('data-form-class')));
     });
-    $("#multiformset-add_form").click(function() {
+    $("#multiformset-add_form").click(function(evt) {
+        // don't submit if this input happens to be within the form
+        evt.preventDefault();
+
         // update total form count
         var form_name = $chooser.val();
         var $total_forms = $("#id_" + form_name + "-TOTAL_FORMS");
