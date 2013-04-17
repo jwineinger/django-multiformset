@@ -7,7 +7,7 @@ function multiformset( options ) {
         'form_chooser_selector' : '#multiformset-form_chooser',
         'new_form_parent' : '#multiformset-new_forms',
         'template_value_attr': 'data-form-class',
-        'template_text_attr': 'data-form-class',
+        'template_text_attr': 'data-multiformset-title',
         'add_form_callback': null
 
     }, options);

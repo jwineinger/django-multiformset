@@ -1,7 +1,6 @@
 {% load get_class %}
 {# stores empty form for javascript #}
-<div style="display:none;" data-form-class="{{ formset.form|get_class }}" id="{{ formset.form|get_class }}-form_template" class="form_template">
-    {# use form template if provided, else just render as_p #}
+<div style="display:none;" data-form-class="{{ formset.form|get_class }}" data-multiformset-title="{% firstof formset.form.Meta.multiformset_title formset.form|get_class %}" id="{{ formset.form|get_class }}-form_template" class="form_template">    {# use form template if provided, else just render as_p #}
     {% if formset.template_name %}
         {% include formset.template_name with form=formset.empty_form %}
     {% else %}
