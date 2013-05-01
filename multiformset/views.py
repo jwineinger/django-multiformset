@@ -33,11 +33,23 @@ class BaseMultiFormsetView(TemplateView):
 		and any initial data for the formset can be set.
 		"""
 		return formset_class(
-			data=self.request.POST or None,
-			files=self.request.FILES or None,
+			data=self.get_formset_data(),
+			files=self.get_formset_files(),
 			prefix=prefix,
 			initial=initial,
 		)
+
+	def get_formset_data(self):
+		"""
+		Method used to get the 'data' for creating formset instances.
+		"""
+		return self.request.POST or None
+
+	def get_formset_files(self):
+		"""
+		Method used to get the 'files' for creating formset instances.
+		"""
+		return self.request.FILES or None
 
 	def get_initial(self, form_class):
 		"""
